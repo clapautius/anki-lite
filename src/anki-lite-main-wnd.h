@@ -1,5 +1,5 @@
-#ifndef ANKI_LITE_MAIN_WND_H
-#define ANKI_LITE_MAIN_WND_H
+#ifndef ANKI_LITE_MAIN_WND_H_
+#define ANKI_LITE_MAIN_WND_H_
 
 #include <QDialog>
 
