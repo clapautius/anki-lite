@@ -32,6 +32,8 @@ namespace anki_lite
 
      private:
 
+      unsigned long int m_id;
+
       std::string m_front_text;
 
       std::string m_back_text;
