@@ -11,15 +11,15 @@ class AnkiDb
 {
 public:
 
-   /**
-    * @throw DbExcp in case of error.
-    */
-   void open_db(const std::string &filename = "");
+    /**
+     * @throw DbExcp in case of error.
+     */
+    void open_db(const std::string &filename = "");
 
-   /**
-    * @throw DbExcp in case of error.
-    */
-   void close_db();
+    /**
+     * @throw DbExcp in case of error.
+     */
+    void close_db();
 };
 
 } // namespace anki_lite

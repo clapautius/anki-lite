@@ -7,13 +7,13 @@
 
 class AnkiLiteMainWnd : public QMainWindow, public Ui::MainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
 public:
 
-  AnkiLiteMainWnd( QWidget *parent = 0, char *name = 0 );
+    AnkiLiteMainWnd( QWidget *parent = 0, char *name = 0 );
 
-protected slots:
+    protected slots:
 
 private:
 

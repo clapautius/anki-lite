@@ -7,16 +7,17 @@
 
 namespace anki_lite
 {
-   class Deck
-   {
-     public:
 
-      bool add_card(const boost::shared_ptr<ICard> &card);
+class Deck
+{
+public:
 
-     private:
+    bool add_card(const boost::shared_ptr<ICard> &card);
 
-      std::vector<boost::shared_ptr<ICard> > m_cards;
-   };
+private:
+
+    std::vector<boost::shared_ptr<ICard> > m_cards;
+};
 
 } // namespace anki_lite
 
