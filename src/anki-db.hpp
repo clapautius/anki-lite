@@ -2,6 +2,7 @@
 #define ANKI_LITE_DB_HPP_
 
 #include <string>
+#include <QtSql/QtSql>
 #include "exceptions.hpp"
 
 namespace anki_lite
@@ -20,6 +21,10 @@ public:
      * @throw DbExcp in case of error.
      */
     void close_db();
+
+private:
+
+    QSqlDatabase m_db;
 };
 
 } // namespace anki_lite

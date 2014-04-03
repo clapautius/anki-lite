@@ -9,6 +9,8 @@ namespace anki_lite
 
 class DbExcp : public std::runtime_error
 {
+public:
+
     DbExcp(const std::string &text)
       : std::runtime_error(text)
     {
