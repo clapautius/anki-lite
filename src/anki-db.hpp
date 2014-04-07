@@ -4,6 +4,7 @@
 #include <string>
 #include <QtSql/QtSql>
 #include "exceptions.hpp"
+#include "collection.hpp"
 
 namespace anki_lite
 {
@@ -21,6 +22,8 @@ public:
      * @throw DbExcp in case of error.
      */
     void close_db();
+
+    Collection get_collection() const;
 
 private:
 

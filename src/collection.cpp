@@ -3,9 +3,9 @@
 namespace anki_lite
 {
 
-void Collection::read_from_db(const AnkiDb &database)
+Collection::Collection(const QString &conf, const QString &decks)
+  : m_conf_json(conf), m_decks_json(decks)
 {
-
 }
 
 };

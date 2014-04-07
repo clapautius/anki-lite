@@ -6,6 +6,7 @@ TEMPLATE = app
 TARGET =
 DEPENDPATH += . src
 INCLUDEPATH += . src
+QT += sql
 
 # Input
 HEADERS += src/anki-db.hpp \

@@ -1,8 +1,7 @@
 #ifndef ANKI_LITE_COLLECTION_HPP_
 #define ANKI_LITE_COLLECTION_HPP_
 
-#include <string>
-#include "anki-db.hpp"
+#include <QString>
 
 namespace anki_lite
 {
@@ -11,11 +10,15 @@ class Collection
 {
 public:
 
-    void read_from_db(const AnkiDb &database);
+    Collection(const QString &conf, const QString &decks);
 
 private:
 
+    QString m_conf_json;
 
+    QString m_decks_json;
 };
 
 } // namespace anki_lite
+
+#endif
