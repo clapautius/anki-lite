@@ -7,7 +7,7 @@ seq  name             file
 ---  ---------------  ----------------------------------------------------------
 0    main             /home/me/Anki/User 1/collection.anki2
 sqlite> .schema
-CREATE TABLE col (
+CREATE TABLE col ( : collection
     id              integer primary key,
     crt             integer not null,
     mod             integer not null,
@@ -16,7 +16,7 @@ CREATE TABLE col (
     dty             integer not null,
     usn             integer not null,
     ls              integer not null,
-    conf            text not null,
+    conf            text not null, : json text
     models          text not null,
     decks           text not null,
     dconf           text not null,
@@ -24,21 +24,26 @@ CREATE TABLE col (
 );
 CREATE TABLE notes (
     id              integer primary key,   /* 0 */ : = cards.nid
-    guid            text not null,         /* 1 */
-    mid             integer not null,      /* 2 */
+    guid            text not null,         /* 1 */ : = guid64
+    mid             integer not null,      /* 2 */ : = model id (?)
     mod             integer not null,      /* 3 */
     usn             integer not null,      /* 4 */
     tags            text not null,         /* 5 */
     flds            text not null,         /* 6 */ : full text (html)
+
     sfld            integer not null,      /* 7 */ : front text
-    csum            integer not null,      /* 8 */
+
+    csum            integer not null,      /* 8 */ : checksum
+      - # 32 bit unsigned number from first 8 digits of sha1 hash
+      - return int(checksum(stripHTMLMedia(data).encode("utf-8"))[:8], 16)
+
     flags           integer not null,      /* 9 */
     data            text not null          /* 10 */
 );
 CREATE TABLE cards (
     id              integer primary key,   /* 0 */
     nid             integer not null,      /* 1 */ : = notes.id
-    did             integer not null,      /* 2 */
+    did             integer not null,      /* 2 */ : = deck id (?)
     ord             integer not null,      /* 3 */
     mod             integer not null,      /* 4 */
     usn             integer not null,      /* 5 */
