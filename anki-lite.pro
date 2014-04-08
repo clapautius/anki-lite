@@ -7,6 +7,7 @@ TARGET =
 DEPENDPATH += . src
 INCLUDEPATH += . src
 QT += sql
+LIBS += -lqjson
 
 # Input
 HEADERS += src/anki-db.hpp \
@@ -14,6 +15,7 @@ HEADERS += src/anki-db.hpp \
            src/card.hpp \
            src/collection.hpp \
            src/deck.hpp \
+           src/anki-utils.hpp \
            src/exceptions.hpp \
            src/main.h
 FORMS += src/anki-lite-main-wnd.ui
@@ -22,4 +24,5 @@ SOURCES += src/anki-db.cpp \
            src/card.cpp \
            src/collection.cpp \
            src/deck.cpp \
+           src/anki-utils.cpp \
            src/main.cpp

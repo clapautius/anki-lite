@@ -11,8 +11,20 @@ class DbExcp : public std::runtime_error
 {
 public:
 
-    DbExcp(const std::string &text)
+    DbExcp(const std::string &text = "Database error")
       : std::runtime_error(text)
+    {
+    }
+
+};
+
+
+class DbJsonExcp : public DbExcp
+{
+public:
+
+    DbJsonExcp(const std::string &text = "Invalid JSON in DB")
+      : DbExcp(text)
     {
     }
 

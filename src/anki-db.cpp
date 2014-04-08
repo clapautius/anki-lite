@@ -6,10 +6,10 @@ using std::string;
 namespace anki_lite
 {
 
-void AnkiDb::open_db(const std::string &filename)
+void AnkiDb::open_db(const QString &filename)
 {
     m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setDatabaseName(filename.c_str());
+    m_db.setDatabaseName(Q_STR(filename));
     if (!m_db.open()) {
         throw DbExcp(Q_STR(m_db.lastError().text()));
     }
@@ -34,8 +34,22 @@ Collection AnkiDb::get_collection() const
     QString conf_json = result.toString();
     qDebug()<<":debug: conf(json): "<<conf_json;
 
-    Collection col(conf_json, "");
+    // get 'decks' field
+    result = query.value(10);
+    if (!result.isValid()) {
+        throw DbExcp("Error getting 'decks' field from 'col' table");
+    }
+    QString decks_json = result.toString();
+    qDebug()<<":debug: decks(json): "<<decks_json;
+
+    Collection col(conf_json, decks_json);
     return col;
 }
+
+Deck AnkiDb::get_deck_by_id(long int id) const
+{
+    qDebug()<<":debug: loading deck with id - TDB"<<id;
+}
+
 
 }
