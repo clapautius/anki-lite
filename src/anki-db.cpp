@@ -1,5 +1,5 @@
 #include "anki-db.hpp"
-#include "main.h"
+#include "anki-utils.hpp"
 
 using std::string;
 
@@ -43,12 +43,20 @@ Collection AnkiDb::get_collection() const
     qDebug()<<":debug: decks(json): "<<decks_json;
 
     Collection col(conf_json, decks_json);
+
+    // read cards for every deck
+    for (int i = 0; i < col.get_no_of_decks(); ++i) {
+        Deck &deck = col.get_deck(i);
+        get_deck_data_from_db(deck);
+    }
+
     return col;
 }
 
-Deck AnkiDb::get_deck_by_id(long int id) const
+
+void AnkiDb::get_deck_data_from_db(Deck &deck) const
 {
-    qDebug()<<":debug: loading deck with id - TDB"<<id;
+    qDebug()<<"loading deck with id "<<deck.id();
 }
 
 

@@ -3,6 +3,8 @@
 
 #include <QVariantMap>
 
+#define Q_STR(x) (x).toUtf8().constData()
+
 namespace anki_lite
 {
 
@@ -11,6 +13,7 @@ namespace anki_lite
  */
 QVariantMap parse_json(const QString &json_text);
 
+//QString remove_quotes(const QString &str); // :fixme: not used
 
 } // namespace anki_lite
 

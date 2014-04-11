@@ -3,7 +3,10 @@
 
 #include <QString>
 #include <QtSql/QtSql>
+#include <stdint.h>
+
 #include "exceptions.hpp"
+#include "main.h"
 #include "collection.hpp"
 #include "deck.hpp"
 #include "card.hpp"
@@ -28,7 +31,7 @@ public:
 
     Collection get_collection() const;
 
-    Deck get_deck_by_id(long int id) const;
+    void get_deck_data_from_db(Deck&) const;
 
 private:
 
