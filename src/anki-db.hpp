@@ -31,6 +31,9 @@ public:
 
     Collection get_collection() const;
 
+    /**
+     * @throw DbExcp in case of error.
+     */
     void get_deck_data_from_db(Deck&) const;
 
 private:

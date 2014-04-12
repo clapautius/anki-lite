@@ -4,6 +4,7 @@
 #include <QDialog>
 
 #include "ui_anki-lite-main-wnd.h"
+#include "collection.hpp"
 
 class AnkiLiteMainWnd : public QMainWindow, public Ui::MainWindow
 {
@@ -12,6 +13,8 @@ class AnkiLiteMainWnd : public QMainWindow, public Ui::MainWindow
 public:
 
     AnkiLiteMainWnd( QWidget *parent = 0, char *name = 0 );
+
+    void show_decks(const anki_lite::Collection &collection);
 
     protected slots:
 

@@ -19,9 +19,11 @@ public:
 
     bool is_valid() const;
 
+    const Deck& get_deck(unsigned index) const;
+
     Deck& get_deck(unsigned index);
 
-    int get_no_of_decks() const;
+    unsigned get_no_of_decks() const;
 
 private:
 

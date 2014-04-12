@@ -1,7 +1,8 @@
 #ifndef ANKI_LITE_CARD_HPP_
 #define ANKI_LITE_CARD_HPP_
 
-#include <string>
+#include <QString>
+#include "main.h"
 
 namespace anki_lite
 {
@@ -9,34 +10,41 @@ class ICard
 {
 public:
 
-    virtual std::string get_front_text() const = 0;
+    virtual QString front_text() const = 0;
 
-    virtual std::string get_back_text() const = 0;
+    virtual QString back_text() const = 0;
+
+    virtual DbId id() const = 0;
 };
 
 class Card: public ICard
 {
 public:
 
-    Card(const std::string &front_text, const std::string &back_text);
+    Card(DbId id, const QString &front_text, const QString &back_text);
 
-    virtual std::string get_front_text() const
+    virtual QString front_text() const
     {
         return m_front_text;
     }
 
-    virtual std::string get_back_text() const
+    virtual QString back_text() const
     {
         return m_back_text;
     }
 
+    virtual DbId id() const
+    {
+        return m_id;
+    }
+
 private:
 
-    unsigned long int m_id;
+    DbId m_id;
 
-    std::string m_front_text;
+    QString m_front_text;
 
-    std::string m_back_text;
+    QString m_back_text;
 };
 
 } // namespace anki_lite

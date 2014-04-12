@@ -2,6 +2,7 @@
 #include "anki-utils.hpp"
 
 using std::string;
+using boost::shared_ptr;
 
 namespace anki_lite
 {
@@ -45,7 +46,7 @@ Collection AnkiDb::get_collection() const
     Collection col(conf_json, decks_json);
 
     // read cards for every deck
-    for (int i = 0; i < col.get_no_of_decks(); ++i) {
+    for (unsigned i = 0; i < col.get_no_of_decks(); ++i) {
         Deck &deck = col.get_deck(i);
         get_deck_data_from_db(deck);
     }
@@ -57,6 +58,23 @@ Collection AnkiDb::get_collection() const
 void AnkiDb::get_deck_data_from_db(Deck &deck) const
 {
     qDebug()<<"loading deck with id "<<deck.id();
+    QSqlQuery query;
+    query.prepare("select c.id, n.sfld, n.flds "
+                  "from cards c, notes n "
+                  "where c.nid = n.id and c.did = ?");
+    query.addBindValue(deck.id());
+    query.exec();
+    while (query.next()) {
+        DbId card_id = query.value(0).toLongLong();
+        QString front_text = query.value(1).toString();
+        QString back_text = query.value(2).toString();
+        boost::shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
+        if (deck.add_card(card)) {
+            qDebug()<<"New card in deck "<<deck.name()<<": back_text="<<card->back_text();
+        } else {
+            qWarning()<<"Error adding card in deck "<<deck.name();
+        }
+    }
 }
 
 

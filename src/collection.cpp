@@ -41,7 +41,7 @@ bool Collection::is_valid() const
 }
 
 
-Deck& Collection::get_deck(unsigned index)
+const Deck& Collection::get_deck(unsigned index) const
 {
     if (index >= m_decks.size()) {
         throw std::runtime_error("Index out of bounds for m_decks");
@@ -50,7 +50,15 @@ Deck& Collection::get_deck(unsigned index)
 }
 
 
-int Collection::get_no_of_decks() const
+Deck& Collection::get_deck(unsigned index)
+{
+    if (index >= m_decks.size()) {
+        throw std::runtime_error("Index out of bounds for m_decks");
+    }
+    return m_decks[index];
+}
+
+unsigned Collection::get_no_of_decks() const
 {
     return m_decks.size();
 }

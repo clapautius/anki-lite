@@ -28,6 +28,7 @@ int main( int argc, char **argv )
         // :fixme: - read from prefs.db first
         db.open_db(QDir::homePath()+"/Anki/User 1/collection.anki2");
         anki_lite::Collection collection = db.get_collection();
+        gp_main_wnd->show_decks(collection);
 
         gp_app->exec();
     }

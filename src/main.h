@@ -10,6 +10,6 @@
 
 extern QApplication *gp_app;
 
-typedef int64_t DbId;
+typedef qlonglong DbId;
 
 #endif

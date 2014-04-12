@@ -27,6 +27,11 @@ public:
         return m_id;
     }
 
+    QString name() const
+    {
+        return m_name;
+    }
+
 private:
 
     long long int m_id;
