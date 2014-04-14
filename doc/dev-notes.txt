@@ -1,1 +1,46 @@
+Behavior
+________
 
+Display order
+-------------
+
+Studying will show cards from the selected deck, and any sub-decks it contains.
+
+For new cards and reviews, Anki fetches cards from the decks in alphabetical order
+(alphabetical order of the decks).
+
+New cards and reviews are fetched separately, and Anki won’t wait until both queues are
+empty before moving on to the next deck.
+
+Cards in learning are fetched from all decks at once, because they are somewhat time
+critical, and shown in the order they are due.
+
+Python code notes
+_________________
+
+Card class
+----------
+
+- type : 0=new, 1=learning, 2=due
+
+  'New' refers to cards that you have downloaded or entered in, but have never been
+  studied before.
+
+  'Learning' refers to cards that were seen for the first time recently, and are still
+  being learnt.
+
+  'To Review' (= due?) refers to cards that were previously learnt, and now need to be
+  reviewed so you don’t forget them.
+
+- queue : 0 = new, 1 = learning, 2 = due, -1 = suspended, -2 = user buried, -3 = sched
+  buried
+
+- due : is used differently for different queues.
+  - new queue: note id or random int
+  - rev queue: integer day
+  - lrn queue: integer timestamp
+
+Dictionary
+__________
+
+- ivl : interval

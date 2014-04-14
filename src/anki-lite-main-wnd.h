@@ -16,7 +16,9 @@ public:
 
     void show_decks(const anki_lite::Collection &collection);
 
-    protected slots:
+protected slots:
+
+    void on_deck_selected(const QModelIndex & index);
 
 private:
 
