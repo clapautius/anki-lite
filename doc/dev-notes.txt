@@ -44,3 +44,11 @@ Dictionary
 __________
 
 - ivl : interval
+
+
+Install the application on the device:
+
+- Nokia PC Suite is needed (will create a serial port when the phone is connected to
+deploy the app.)
+
+QtSdk 1.1.1 : ftp://ftp.informatik.hu-berlin.de/pub/Linux/Qt/QT/qtsdk/

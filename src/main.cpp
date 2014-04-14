@@ -26,7 +26,9 @@ int main( int argc, char **argv )
         // load database data
         anki_lite::AnkiDb db;
         // :fixme: - read from prefs.db first
-        db.open_db(QDir::homePath()+"/Anki/User 1/collection.anki2");
+        QString db_path = QDir::homePath()+"/Anki/User 1/collection.anki2";
+        qDebug() << "db_path=" << db_path;
+        db.open_db(db_path);
         anki_lite::Collection collection = db.get_collection();
         gp_main_wnd->show_decks(collection);
 
