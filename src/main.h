@@ -3,6 +3,7 @@
 
 #include <QApplication>
 #include <QString>
+#include "anki-types.h"
 
 #define ANKI_LITE_VER "0.1" // :release:
 
@@ -10,6 +11,6 @@
 
 extern QApplication *gp_app;
 
-typedef qlonglong DbId;
+typedef anki_lite::Id DbId;
 
 #endif

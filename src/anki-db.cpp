@@ -68,9 +68,11 @@ void AnkiDb::get_deck_data_from_db(Deck &deck) const
         DbId card_id = query.value(0).toLongLong();
         QString front_text = query.value(1).toString();
         QString back_text = query.value(2).toString();
-        boost::shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
+        boost::shared_ptr<ICard> card(new Card(card_id,
+                                               Q_STR(front_text), Q_STR(back_text)));
         if (deck.add_card(card)) {
-            qDebug()<<"New card in deck "<<deck.name()<<": back_text="<<card->back_text();
+            qDebug()<<"New card in deck "<<deck.name()
+                    <<": back_text="<<card->back_text_cstr();
         } else {
             qWarning()<<"Error adding card in deck "<<deck.name();
         }

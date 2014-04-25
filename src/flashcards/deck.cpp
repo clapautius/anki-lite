@@ -1,26 +1,33 @@
-#include <QDebug>
-
-#include <iostream> // :tmp:
+#include <sstream>
+#include <iostream> // :fixme:
 
 #include "deck.hpp"
 #include "anki-utils.hpp"
 
+using std::string;
+
 namespace anki_lite
 {
 
-Deck::Deck(const QString &id, const QVariant &details)
+Deck::Deck(const string &id, const string &details)
   : m_id(-1)
 {
-    qDebug() << __FUNCTION__ << "(id=" << id <<")";
-    bool ok = false;
-    m_id = id.toLongLong(&ok);
-    if (!ok) {
-        qDebug() << "Invalid id in deck: id str = " << id.toLong();
+    // :fixme:
+    //qDebug() << __FUNCTION__ << "(id=" << id <<")";
+    std::cout << __FUNCTION__ << "(id=" << id <<")";
+    char *ptr = NULL;
+    m_id = strtoll(id.c_str(), &ptr, 10);
+    if (m_id == 0 && ptr == id.c_str()) {
+        // :fixme:
+        //qDebug() << "Invalid id in deck: id str = " << id.toLong();
+        std::cout << "Invalid id in deck: id str = " << id.c_str();
         m_id = -1;
     } else {
         QVariantMap deck_map = details.toMap();
         if (deck_map.empty()) {
-            qDebug() << "No details for deck with id " << m_id << "(empty map)";
+            // :fixme:
+            //qDebug() << "No details for deck with id " << m_id << "(empty map)";
+            std::cout << "No details for deck with id " << m_id << "(empty map)";
             m_id = -1;
         } else {
             m_name = deck_map["name"].toString();

@@ -3,8 +3,6 @@
 
 #include <vector>
 #include <boost/shared_ptr.hpp>
-#include <QVariant>
-#include "main.h"
 #include "card.hpp"
 
 namespace anki_lite
@@ -14,29 +12,33 @@ class Deck
 {
 public:
 
-    Deck(const QString &id, const QVariant &details);
+    /**
+     * @param[in] id : deck id, as string
+     * @param[in] details : deck details, json
+     */
+    Deck(const std::string &id, const std::string &details);
 
     bool add_card(const boost::shared_ptr<ICard> &card);
 
     bool is_valid() const;
 
-    QString toString() const;
+    std::string toString() const;
 
-    DbId id() const
+    Id id() const
     {
         return m_id;
     }
 
-    QString name() const
+    std::string name() const
     {
         return m_name;
     }
 
 private:
 
-    long long int m_id;
+    Id m_id;
 
-    QString m_name;
+    std::string m_name;
 
     std::vector<boost::shared_ptr<ICard> > m_cards;
 };
