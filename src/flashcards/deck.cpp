@@ -5,10 +5,12 @@
 #include "anki-utils.hpp"
 
 using std::string;
+using std::map;
 
 namespace anki_lite
 {
 
+#if 0
 Deck::Deck(const string &id, const string &details)
   : m_id(-1)
 {
@@ -35,6 +37,26 @@ Deck::Deck(const string &id, const string &details)
     }
 }
 
+#endif
+
+Deck::Deck(const string &id, map<string, string> &details)
+     : m_id(-1)
+{
+    // :fixme:
+    //qDebug() << __FUNCTION__ << "(id=" << id <<")";
+    std::cout << __FUNCTION__ << "(id=" << id <<")";
+    char *ptr = NULL;
+    m_id = strtoll(id.c_str(), &ptr, 10);
+    if (m_id == 0 && ptr == id.c_str()) {
+        // :fixme:
+        //qDebug() << "Invalid id in deck: id str = " << id.toLong();
+        std::cout << "Invalid id in deck: id str = " << id.c_str();
+        m_id = -1;
+    } else {
+         m_name = details["name"];
+    }
+}
+
 
 bool Deck::add_card(const boost::shared_ptr<ICard> &card)
 {
@@ -50,10 +72,11 @@ bool Deck::is_valid() const
 }
 
 
-QString Deck::toString() const
+string Deck::toString() const
 {
-    QString ret = QString("Deck: id=%1, name=%2").arg(m_id).arg(m_name);
-    return ret;
+    std::ostringstream ret;
+    ret<<"Deck: id="<<m_id<<", name="<<m_name;
+    return ret.str();
 }
 
 } // namespace anki_lite

@@ -1,8 +1,12 @@
 #include <stdexcept>
+#include <map>
 #include <QDebug>
 
 #include "collection.hpp"
 #include "anki-utils.hpp"
+
+using std::map;
+using std::string;
 
 namespace anki_lite
 {
@@ -22,8 +26,17 @@ Collection::Collection(const QString &conf, const QString &decks)
         for(QVariantMap::const_iterator iter = decks_map.begin(); iter != decks_map.end();
             ++iter) {
             qDebug() << iter.key() << iter.value();
-            Deck deck(iter.key(), iter.value());
-            qDebug() << "New deck object: " << deck.toString();
+
+            QVariantMap deck_map = iter.value().toMap();
+            map<string, string> deck_stl_map;
+            if (deck_map.empty()) {
+                qDebug() << "No details for deck with id " << iter.key() << "(empty map)";
+            } else {
+                deck_stl_map["name"] = Q_STR(deck_map["name"].toString());
+            }
+
+            Deck deck(Q_STR(iter.key()), deck_stl_map);
+            qDebug() << "New deck object: " << deck.toString().c_str();
             m_decks.push_back(deck);
         }
     }

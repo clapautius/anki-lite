@@ -30,7 +30,7 @@ void AnkiLiteMainWnd::show_decks(const anki_lite::Collection &collection)
 {
     listWidget->clear();
     for (unsigned i = 0; i < collection.get_no_of_decks(); ++i) {
-        listWidget->addItem(collection.get_deck(i).name());
+        listWidget->addItem(collection.get_deck(i).name().c_str());
     }
 }
 

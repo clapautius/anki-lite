@@ -3,7 +3,7 @@
 
 #include <QApplication>
 #include <QString>
-#include "anki-types.h"
+#include "anki-types.hpp"
 
 #define ANKI_LITE_VER "0.1" // :release:
 

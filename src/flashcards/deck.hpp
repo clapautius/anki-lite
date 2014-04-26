@@ -2,6 +2,7 @@
 #define ANKI_LITE_DECK_HPP_
 
 #include <vector>
+#include <map>
 #include <boost/shared_ptr.hpp>
 #include "card.hpp"
 
@@ -16,7 +17,13 @@ public:
      * @param[in] id : deck id, as string
      * @param[in] details : deck details, json
      */
-    Deck(const std::string &id, const std::string &details);
+    //Deck(const std::string &id, const std::string &details);
+
+    /**
+     * @param[in] id : deck id, as string
+     * @param[in] details : deck details, as a map of strings
+     */
+    Deck(const std::string &id, std::map<std::string, std::string> &details);
 
     bool add_card(const boost::shared_ptr<ICard> &card);
 

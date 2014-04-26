@@ -2,7 +2,7 @@
 #define ANKI_LITE_CARD_HPP_
 
 #include <string>
-#include "anki-types.h"
+#include "anki-types.hpp"
 
 namespace anki_lite
 {

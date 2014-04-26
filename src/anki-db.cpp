@@ -71,10 +71,10 @@ void AnkiDb::get_deck_data_from_db(Deck &deck) const
         boost::shared_ptr<ICard> card(new Card(card_id,
                                                Q_STR(front_text), Q_STR(back_text)));
         if (deck.add_card(card)) {
-            qDebug()<<"New card in deck "<<deck.name()
+            qDebug()<<"New card in deck "<<deck.name().c_str()
                     <<": back_text="<<card->back_text_cstr();
         } else {
-            qWarning()<<"Error adding card in deck "<<deck.name();
+            qWarning()<<"Error adding card in deck "<<deck.name().c_str();
         }
     }
 }
