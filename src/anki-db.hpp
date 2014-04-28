@@ -7,6 +7,7 @@
 
 #include "exceptions.hpp"
 #include "main.h"
+#include "anki-storage.hpp"
 #include "collection.hpp"
 #include "deck.hpp"
 #include "card.hpp"
@@ -15,28 +16,44 @@
 namespace anki_lite
 {
 
-class AnkiDb
+class AnkiSqliteDb : public AnkiStorage
 {
 public:
 
-    /**
-     * @throw DbExcp in case of error.
-     */
-    void open_db(const QString &filename = "");
+    AnkiSqliteDb(const QString &db_name = "");
+
+    virtual ~AnkiSqliteDb() {};
 
     /**
      * @throw DbExcp in case of error.
      */
-    void close_db();
-
-    Collection get_collection() const;
+    virtual void open_storage();
 
     /**
      * @throw DbExcp in case of error.
      */
-    void get_deck_data_from_db(Deck&) const;
+    virtual void close_storage();
 
-private:
+    virtual void get_collection(Collection &collection) const;
+
+    /**
+     * Read deck data and creates the Deck objects. The decks will have all the config
+     * params but no cards in them. Use get_cards_for_deck to add cards.
+     *
+     * @throw DbExcp in case of error.
+     */
+    virtual void get_decks(std::vector<Deck> &decks) const;
+
+    /**
+     * @throw DbExcp in case of error.
+     */
+    virtual void get_cards_for_deck(Deck&) const;
+
+protected:
+
+    static TextMapT convert_json_conf_to_map(const QString &json_conf);
+
+    QString m_db_filename;
 
     QSqlDatabase m_db;
 };

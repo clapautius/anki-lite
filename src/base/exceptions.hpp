@@ -11,7 +11,7 @@ class DbExcp : public std::runtime_error
 {
 public:
 
-    DbExcp(const std::string &text = "Database error")
+    DbExcp(const std::string &text = "Anki internal database error")
       : std::runtime_error(text)
     {
     }

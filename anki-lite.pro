@@ -15,6 +15,7 @@ HEADERS += src/anki-db.hpp \
            src/anki-utils.hpp \
            src/main.h \
            src/base/exceptions.hpp \
+           src/base/anki-storage.hpp \
            src/flashcards/card.hpp \
            src/flashcards/collection.hpp \
            src/flashcards/collection-builder.hpp \

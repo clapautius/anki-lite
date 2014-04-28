@@ -20,6 +20,9 @@ public:
 
     bool set_conf(const TextMapT &conf);
 
+    bool add_deck(const Deck &deck);
+
+    // :fixme: to be removed
     /**
      * @param[in] decks : they will be modified.
      */

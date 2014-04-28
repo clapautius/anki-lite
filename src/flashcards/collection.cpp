@@ -97,6 +97,14 @@ bool Collection::is_valid() const
 }
 
 
+bool Collection::add_deck(const Deck &deck)
+{
+    // :fixme: add extra checks (check duplicate ids, etc.)
+    m_decks.push_back(deck);
+    return true;
+}
+
+
 const Deck& Collection::get_deck_by_idx(unsigned index) const
 {
     if (index >= m_decks.size()) {
