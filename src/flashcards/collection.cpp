@@ -11,6 +11,48 @@ using std::string;
 namespace anki_lite
 {
 
+
+Collection::Collection()
+  : m_valid(false)
+{
+}
+
+
+bool Collection::set_conf(const TextMapT &conf)
+{
+    bool rc = true;
+    m_conf = conf;
+    // :fixme: check various mandatory values in conf
+    m_valid = true;
+    return rc;
+}
+
+
+bool Collection::set_decks(std::vector<TextMapT> &decks)
+{
+    bool rc = true;
+    if (m_valid) {
+        for (unsigned i = 0; i < decks.size(); i++) {
+            TextMapT::iterator it = decks[i].find("id");
+            if (it != decks[i].end()) {
+                // extrart id from map and then erase it
+                string id = it->second;
+                decks[i].erase(it);
+                Deck deck(id, decks[i]);
+                m_decks.push_back(deck);
+            } else {
+                rc = false;
+                break;
+            }
+        }
+    } else {
+        rc = false;
+    }
+    return rc;
+}
+
+#if 0
+
 /**
  * Build a collection, add Deck objects but without cards.
  *
@@ -47,6 +89,7 @@ Collection::Collection(const QString &conf, const QString &decks)
     m_valid = true;
 }
 
+#endif
 
 bool Collection::is_valid() const
 {
@@ -54,7 +97,7 @@ bool Collection::is_valid() const
 }
 
 
-const Deck& Collection::get_deck(unsigned index) const
+const Deck& Collection::get_deck_by_idx(unsigned index) const
 {
     if (index >= m_decks.size()) {
         throw std::runtime_error("Index out of bounds for m_decks");
@@ -63,7 +106,7 @@ const Deck& Collection::get_deck(unsigned index) const
 }
 
 
-Deck& Collection::get_deck(unsigned index)
+Deck& Collection::get_deck_by_idx(unsigned index)
 {
     if (index >= m_decks.size()) {
         throw std::runtime_error("Index out of bounds for m_decks");

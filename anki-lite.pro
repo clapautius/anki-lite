@@ -17,6 +17,7 @@ HEADERS += src/anki-db.hpp \
            src/base/exceptions.hpp \
            src/flashcards/card.hpp \
            src/flashcards/collection.hpp \
+           src/flashcards/collection-builder.hpp \
            src/flashcards/deck.hpp
 FORMS += src/anki-lite-main-wnd.ui
 SOURCES += src/anki-db.cpp \
@@ -25,4 +26,5 @@ SOURCES += src/anki-db.cpp \
            src/main.cpp \
            src/flashcards/card.cpp \
            src/flashcards/collection.cpp \
+           src/flashcards/collection-builder.cpp \
            src/flashcards/deck.cpp

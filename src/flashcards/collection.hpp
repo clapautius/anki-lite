@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <QString>
+#include "anki-types.hpp"
 #include "deck.hpp"
 
 namespace anki_lite
@@ -15,13 +16,24 @@ class Collection
 {
 public:
 
+    Collection();
+
+    bool set_conf(const TextMapT &conf);
+
+    /**
+     * @param[in] decks : they will be modified.
+     */
+    bool set_decks(std::vector<TextMapT> &decks);
+
+    /*
     Collection(const QString &conf, const QString &decks);
+    */
 
     bool is_valid() const;
 
-    const Deck& get_deck(unsigned index) const;
+    const Deck& get_deck_by_idx(unsigned index) const;
 
-    Deck& get_deck(unsigned index);
+    Deck& get_deck_by_idx(unsigned index);
 
     unsigned get_no_of_decks() const;
 
@@ -29,9 +41,13 @@ private:
 
     bool m_valid;
 
+    TextMapT m_conf;
+
+    /*
     QString m_conf_json;
 
     QString m_decks_json;
+    */
 
     std::vector<Deck> m_decks;
 };

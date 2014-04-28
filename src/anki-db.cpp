@@ -43,11 +43,12 @@ Collection AnkiDb::get_collection() const
     QString decks_json = result.toString();
     qDebug()<<":debug: decks(json): "<<decks_json;
 
-    Collection col(conf_json, decks_json);
+    //Collection col(conf_json, decks_json);
+    Collection col;
 
     // read cards for every deck
     for (unsigned i = 0; i < col.get_no_of_decks(); ++i) {
-        Deck &deck = col.get_deck(i);
+        Deck &deck = col.get_deck_by_idx(i);
         get_deck_data_from_db(deck);
     }
 
