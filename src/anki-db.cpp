@@ -129,7 +129,7 @@ void AnkiSqliteDb::get_cards_for_deck(Deck &deck) const
 }
 
 
-TextMapT AnkiSqliteDb::convert_json_conf_to_map(const QString &json_conf)
+TextMapT AnkiSqliteDb::convert_json_conf_to_map(const QString &)
 {
     TextMapT conf;
     // :todo:

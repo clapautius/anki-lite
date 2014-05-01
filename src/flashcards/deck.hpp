@@ -27,6 +27,11 @@ public:
 
     bool add_card(const boost::shared_ptr<ICard> &card);
 
+    unsigned int get_no_of_cards() const;
+
+    boost::shared_ptr<ICard> get_card(unsigned index);
+    boost::shared_ptr<const ICard> get_card(unsigned index) const;
+
     bool is_valid() const;
 
     std::string toString() const;

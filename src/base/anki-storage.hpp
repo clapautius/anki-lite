@@ -2,7 +2,7 @@
 #define ANKI_LITE_ANKI_STORAGE_HPP_
 
 #include <stdint.h>
-
+#include <vector>
 
 namespace anki_lite
 {
@@ -27,6 +27,10 @@ public:
     virtual void close_storage() = 0;
 
     virtual void get_collection(Collection&) const = 0;
+#if 0
+    virtual void write_collection(Collection&) const = 0;
+#endif
+protected:
 
     /**
      * Read deck data and creates the Deck objects. The decks will have all the config
@@ -41,6 +45,17 @@ public:
      */
     virtual void get_cards_for_deck(Deck&) const = 0;
 
+#if 0
+    /**
+     * @throw DbExcp in case of error.
+     */
+    virtual void write_decks(const std::vector<Deck> &decks) = 0;
+
+    /**
+     * @throw DbExcp in case of error.
+     */
+    virtual void write_cards_for_deck(const Deck&) = 0;
+#endif
 };
 
 } // namespace anki_lite

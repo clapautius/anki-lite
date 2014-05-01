@@ -36,6 +36,8 @@ public:
 
     virtual void get_collection(Collection &collection) const;
 
+protected:
+
     /**
      * Read deck data and creates the Deck objects. The decks will have all the config
      * params but no cards in them. Use get_cards_for_deck to add cards.

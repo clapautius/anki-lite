@@ -40,6 +40,13 @@ Card class
   - rev queue: integer day
   - lrn queue: integer timestamp
 
+
+SimpleDb
+________
+
+table[1] | id(int64) | field[16] | field_type[1] | value(int64)
+
+
 Dictionary
 __________
 

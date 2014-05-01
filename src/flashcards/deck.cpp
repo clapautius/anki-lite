@@ -79,4 +79,24 @@ string Deck::toString() const
     return ret.str();
 }
 
+
+unsigned int Deck::get_no_of_cards() const
+{
+    return m_cards.size();
+}
+
+
+boost::shared_ptr<ICard> Deck::get_card(unsigned index)
+{
+    // :fixme: check boundaries
+    return m_cards[index];
+}
+
+
+boost::shared_ptr<const ICard> Deck::get_card(unsigned index) const
+{
+    // :fixme: check boundaries
+    return m_cards[index];
+}
+
 } // namespace anki_lite
