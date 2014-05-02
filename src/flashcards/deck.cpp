@@ -6,6 +6,8 @@
 
 using std::string;
 using std::map;
+using std::ostringstream;
+using std::endl;
 
 namespace anki_lite
 {
@@ -38,6 +40,14 @@ Deck::Deck(const string &id, const string &details)
 }
 
 #endif
+
+Deck::Deck(Id id, std::map<std::string, std::string> &details)
+  : m_id(id)
+{
+    std::cout << __FUNCTION__ << "(id=" << id <<")";
+    m_name = details["name"];
+}
+
 
 Deck::Deck(const string &id, map<string, string> &details)
      : m_id(-1)
@@ -72,10 +82,15 @@ bool Deck::is_valid() const
 }
 
 
-string Deck::toString() const
+string Deck::to_string() const
 {
-    std::ostringstream ret;
-    ret<<"Deck: id="<<m_id<<", name="<<m_name;
+    ostringstream ret;
+    ret << "Deck: id=" << m_id << ", name=" << m_name << endl;
+    for (unsigned i = 0; i < get_no_of_cards(); i++) {
+        boost::shared_ptr<const ICard> card = get_card(i);
+        ret << card->to_string() <<endl;
+    }
+    ret << endl;
     return ret.str();
 }
 

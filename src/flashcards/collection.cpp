@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <map>
+#include <sstream>
 #include <QDebug>
 
 #include "collection.hpp"
@@ -7,6 +8,8 @@
 
 using std::map;
 using std::string;
+using std::ostringstream;
+using std::endl;
 
 namespace anki_lite
 {
@@ -125,6 +128,19 @@ Deck& Collection::get_deck_by_idx(unsigned index)
 unsigned Collection::get_no_of_decks() const
 {
     return m_decks.size();
+}
+
+
+std::string Collection::to_string() const
+{
+    ostringstream ostr;
+    ostr << "Collection:" << endl;
+    for (unsigned i = 0; i < get_no_of_decks(); i++) {
+        const Deck &deck = get_deck_by_idx(i);
+        ostr << deck.to_string();
+    }
+    ostr << endl;
+    return ostr.str();
 }
 
 };

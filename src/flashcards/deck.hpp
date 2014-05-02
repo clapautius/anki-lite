@@ -23,7 +23,13 @@ public:
      * @param[in] id : deck id, as string
      * @param[in] details : deck details, as a map of strings
      */
-    Deck(const std::string &id, std::map<std::string, std::string> &details);
+    Deck(Id id, TextMapT &details);
+
+    /**
+     * @param[in] id : deck id, as string
+     * @param[in] details : deck details, as a map of strings
+     */
+    Deck(const std::string &id, TextMapT &details);
 
     bool add_card(const boost::shared_ptr<ICard> &card);
 
@@ -34,7 +40,7 @@ public:
 
     bool is_valid() const;
 
-    std::string toString() const;
+    std::string to_string() const;
 
     Id id() const
     {

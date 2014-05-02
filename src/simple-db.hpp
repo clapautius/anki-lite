@@ -41,7 +41,7 @@ public:
      */
     virtual void close_storage();
 
-    virtual void get_collection(Collection&) const;
+    virtual void get_collection(Collection&);
 
     virtual void write_collection(const Collection &collection);
 
@@ -53,17 +53,17 @@ protected:
      *
      * @throw DbExcp in case of error.
      */
-    virtual void get_decks(std::vector<Deck> &decks) const;
+    virtual void get_decks(std::vector<Deck> &decks);
 
     /**
      * @throw DbExcp in case of error.
      */
-    virtual void get_cards_for_deck(Deck&) const;
+    virtual void get_cards_for_deck(Deck&);
 
     /**
      * @throw DbExcp in case of error.
      */
-    virtual void write_decks(const std::vector<Deck> &decks);
+    virtual void write_deck(const Deck &decks);
 
     /**
      * @throw DbExcp in case of error.
@@ -138,6 +138,8 @@ private:
 public: // :tmp:
     void write_card(const ICard &card);
 
+    boost::shared_ptr<ICard> read_card(Id card_id);
+
 private:
     bool m_init;
 
@@ -147,7 +149,9 @@ private:
 
     std::fstream m_strings_stream;
 
-    std::vector< std::map<uint64_t, Record> > m_records;
+    typedef std::map<uint64_t, std::map<std::string, Record> > TableMap;
+
+    std::vector<TableMap> m_records;
 
     bool m_records_loaded;
 

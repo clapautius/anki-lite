@@ -1,5 +1,6 @@
 #include <string.h>
 #include <stdint.h>
+#include "collection.hpp"
 #include "simple-db.hpp"
 #include "exceptions.hpp"
 
@@ -14,7 +15,7 @@ SimpleDb::SimpleDb(const string &filename)
   : m_init(false), m_filename(filename), m_records_loaded(false)
 {
     for (int i = 0; i < k_max_table; i++) {
-        map<uint64_t, Record> empty_records_map;
+        map<uint64_t, map<string, Record> > empty_records_map;
         m_records.push_back(empty_records_map);
     }
 }
@@ -46,20 +47,62 @@ void SimpleDb::close_storage()
 }
 
 
-void SimpleDb::get_collection(Collection &) const
+void SimpleDb::get_collection(Collection &collection)
 {
+    // :todo - read config
+
+    // get decks
+    vector<Deck> decks;
+    get_decks(decks);
+    for (unsigned i = 0; i < decks.size(); i++) {
+        collection.add_deck(decks[i]);
+    }
 }
 
 
-void SimpleDb::get_decks(vector<Deck> &) const
+void SimpleDb::get_decks(vector<Deck> &decks)
 {
-
+    TableMap::iterator it;
+    TableMap &decks_table = m_records[k_decks_table];
+    for (it = decks_table.begin(); it != decks_table.end(); ++it) {
+        uint64_t deck_id = it->first;
+        if (!(it->second)["name"].str_value.empty()) {
+            map<string, string> deck_details;
+            deck_details["name"] = (it->second)["name"].str_value;
+            Deck deck(deck_id, deck_details);
+            get_cards_for_deck(deck);
+            decks.push_back(deck);
+        }
+    }
 }
 
 
-void SimpleDb::get_cards_for_deck(Deck&) const
+void SimpleDb::get_cards_for_deck(Deck &deck)
 {
+    TableMap::iterator it;
+    TableMap &cards_table = m_records[k_cards_table];
+    for (it = cards_table.begin(); it != cards_table.end(); ++it) {
+        uint64_t card_id = it->first;
+        Id deck_id = cards_table[card_id]["deck_id"].value;
+        if (deck.id() == deck_id) {
+            string front_text = cards_table[card_id]["front_text"].str_value;
+            string back_text = cards_table[card_id]["back_text"].str_value;
+            shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
+            card->set_deck_id(deck_id);
+            deck.add_card(card);
+        }
+    }
+}
 
+
+boost::shared_ptr<ICard> SimpleDb::read_card(Id card_id)
+{
+    Id deck_id = record_get_int_value(k_cards_table, card_id, "deck_id");
+    string front_text = record_get_str_value(k_cards_table, card_id, "front_text");
+    string back_text = record_get_str_value(k_cards_table, card_id, "back_text");
+    boost::shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
+    card->set_deck_id(deck_id);
+    return card;
 }
 
 
@@ -136,16 +179,20 @@ uint64_t SimpleDb::hton64(uint64_t input)
 }
 
 
-void SimpleDb::write_collection(const Collection &)
+void SimpleDb::write_collection(const Collection &collection)
 {
+    // :todo: - write conf
+
+    // write decks
+    for (unsigned i = 0; i < collection.get_no_of_decks(); i++) {
+        write_deck(collection.get_deck_by_idx(i));
+    }
 }
 
 
-void SimpleDb::write_decks(const vector<Deck> &decks)
+void SimpleDb::write_deck(const Deck &deck)
 {
-    for (unsigned i = 0; i < decks.size(); i++) {
-        write_record(k_decks_table, decks[i].id(), "name", decks[i].name());
-    }
+    write_record(k_decks_table, deck.id(), "name", deck.name());
 }
 
 
@@ -160,6 +207,7 @@ void SimpleDb::write_cards_for_deck(const Deck &deck)
 
 void SimpleDb::write_card(const ICard &card)
 {
+    write_record(k_cards_table, card.id(), "deck_id", card.deck_id());
     write_record(k_cards_table, card.id(), "front_text", card.front_text());
     write_record(k_cards_table, card.id(), "back_text", card.back_text());
 }
@@ -192,7 +240,7 @@ void SimpleDb::read_all_records()
             }
             record.str_value = str_buffer;
         }
-        m_records[record.table][record.id] = record;
+        m_records[record.table][record.id][record.field] = record;
     }
     if (m_records_stream.eof()) {
         if (m_records_stream.gcount() != 0) {
@@ -202,6 +250,32 @@ void SimpleDb::read_all_records()
         throw IoExcp("Error reading from db file");
     }
     m_records_loaded = true;
+}
+
+
+uint64_t SimpleDb::record_get_int_value(Table table, Id id, const std::string &field)
+{
+    if (m_records[table].count(id) == 1) {
+        if (m_records[table][id].count(field) == 1) {
+            if (m_records[table][id][field].field_type == k_field_int) {
+                return m_records[table][id][field].value;
+            }
+        }
+    }
+    throw DbExcp("Needed value not found in DB");
+}
+
+
+std::string SimpleDb::record_get_str_value(Table table, Id id, const std::string &field)
+{
+    if (m_records[table].count(id) == 1) {
+        if (m_records[table][id].count(field) == 1) {
+            if (m_records[table][id][field].field_type == k_field_string) {
+                return m_records[table][id][field].str_value;
+            }
+        }
+    }
+    throw DbExcp("Needed value not found in DB");
 }
 
 } // namespace anki_lite

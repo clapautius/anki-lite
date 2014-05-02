@@ -22,6 +22,12 @@ public:
     virtual const char* back_text_cstr() const = 0;
 
     virtual Id id() const = 0;
+
+    virtual void set_deck_id(Id) = 0;
+
+    virtual Id deck_id() const = 0;
+
+    virtual std::string to_string() const = 0;
 };
 
 class Card: public ICard
@@ -55,9 +61,23 @@ public:
         return m_id;
     }
 
+    virtual void set_deck_id(Id deck_id)
+    {
+        m_deck_id = deck_id;
+    }
+
+    virtual Id deck_id() const
+    {
+        return m_deck_id;
+    }
+
+    virtual std::string to_string() const;
+
 private:
 
     Id m_id;
+
+    Id m_deck_id;
 
     std::string m_front_text;
 

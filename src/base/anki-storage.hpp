@@ -26,7 +26,7 @@ public:
      */
     virtual void close_storage() = 0;
 
-    virtual void get_collection(Collection&) const = 0;
+    virtual void get_collection(Collection&) = 0;
 #if 0
     virtual void write_collection(Collection&) const = 0;
 #endif
@@ -38,12 +38,12 @@ protected:
      *
      * @throw DbExcp in case of error.
      */
-    virtual void get_decks(std::vector<Deck> &decks) const = 0;
+    virtual void get_decks(std::vector<Deck> &decks) = 0;
 
     /**
      * @throw DbExcp in case of error.
      */
-    virtual void get_cards_for_deck(Deck&) const = 0;
+    virtual void get_cards_for_deck(Deck&) = 0;
 
 #if 0
     /**

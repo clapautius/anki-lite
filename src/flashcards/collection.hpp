@@ -40,6 +40,8 @@ public:
 
     unsigned get_no_of_decks() const;
 
+    std::string to_string() const;
+
 private:
 
     bool m_valid;
