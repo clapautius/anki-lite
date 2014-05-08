@@ -30,7 +30,7 @@ void AnkiSqliteDb::close_storage()
 }
 
 
-void AnkiSqliteDb::get_collection(Collection &collection) const
+void AnkiSqliteDb::get_collection(Collection &collection)
 {
     QSqlQuery query = m_db.exec("select id, crt, mod, scm, ver, dty, usn, ls, conf, "
                                 "models, decks, dconf, tags "
@@ -65,7 +65,7 @@ void AnkiSqliteDb::get_collection(Collection &collection) const
 }
 
 
-void AnkiSqliteDb::get_decks(std::vector<Deck> &decks) const
+void AnkiSqliteDb::get_decks(std::vector<Deck> &decks)
 {
     QSqlQuery query = m_db.exec("select decks "
                                 "from col");
@@ -98,20 +98,20 @@ void AnkiSqliteDb::get_decks(std::vector<Deck> &decks) const
         }
 
         Deck deck(Q_STR(iter.key()), deck_stl_map);
-        qDebug() << "New deck object: " << deck.toString().c_str();
+        qDebug() << "New deck object: " << deck.to_string().c_str();
         decks.push_back(deck);
     }
 }
 
 
-void AnkiSqliteDb::get_cards_for_deck(Deck &deck) const
+void AnkiSqliteDb::get_cards_for_deck(Deck &deck)
 {
     qDebug()<<"loading deck with id "<<deck.id();
     QSqlQuery query;
     query.prepare("select c.id, n.sfld, n.flds "
                   "from cards c, notes n "
                   "where c.nid = n.id and c.did = ?");
-    query.addBindValue(deck.id());
+    query.addBindValue((qulonglong)deck.id());
     query.exec();
     while (query.next()) {
         DbId card_id = query.value(0).toLongLong();
