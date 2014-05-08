@@ -28,6 +28,24 @@ public:
     virtual Id deck_id() const = 0;
 
     virtual std::string to_string() const = 0;
+
+    virtual int e_factor() const = 0;
+
+    virtual void set_e_factor(int e_factor) = 0;
+
+    virtual Interval last_view() const = 0;
+
+    virtual void set_last_view_now() = 0;
+
+    virtual void set_interval(Interval intv) = 0;
+
+    virtual Interval due() const = 0;
+
+    virtual int repetition() const = 0;
+
+    virtual void inc_repetition() = 0;
+
+    virtual void reset_repetition() = 0;
 };
 
 class Card: public ICard
@@ -73,6 +91,56 @@ public:
 
     virtual std::string to_string() const;
 
+    virtual int e_factor() const
+    {
+        return m_e_factor;
+    }
+
+    virtual void set_e_factor(int e_factor)
+    {
+        m_e_factor = e_factor;
+    }
+
+    virtual Interval last_view() const
+    {
+        return m_last_view;
+    }
+
+    virtual void set_last_view_now()
+    {
+        m_last_view = time(NULL);
+    }
+
+    virtual Interval interval() const
+    {
+        return m_interval;
+    }
+
+    virtual void set_interval(Interval intv)
+    {
+        m_interval = intv;
+    }
+
+    Interval due() const
+    {
+        return m_last_view + m_interval;
+    }
+
+    virtual int repetition() const
+    {
+        return m_repetition;
+    }
+
+    virtual void inc_repetition()
+    {
+        ++m_repetition;
+    }
+
+    virtual void reset_repetition()
+    {
+        m_repetition = 1;
+    }
+
 private:
 
     Id m_id;
@@ -82,6 +150,14 @@ private:
     std::string m_front_text;
 
     std::string m_back_text;
+
+    int m_e_factor;
+
+    Interval m_last_view;
+
+    Interval m_interval;
+
+    int m_repetition;
 };
 
 } // namespace anki_lite
