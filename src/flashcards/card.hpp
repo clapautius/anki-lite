@@ -46,7 +46,10 @@ public:
     virtual void inc_repetition() = 0;
 
     virtual void reset_repetition() = 0;
+
+    virtual Interval interval() const = 0;
 };
+
 
 class Card: public ICard
 {

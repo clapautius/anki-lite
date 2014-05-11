@@ -1,7 +1,10 @@
-#ifndef ANKI_LITE_I_MEMO_ALG_HPP_
-#define ANKI_LITE_I_MEMO_ALG_HPP_
+#ifndef ANKI_LITE_MEMO_ALG_SM2_HPP_
+#define ANKI_LITE_MEMO_ALG_SM2_HPP_
 
 #include "i-memo-alg.hpp"
+
+namespace anki_lite
+{
 
 class MemoAlgSm2 : IMemoAlg
 {
@@ -11,10 +14,12 @@ public:
 protected:
 
     virtual Interval compute_new_interval(Interval old_intv, int repetition,
-                                          double e_factor) const;
+                                          int e_factor) const;
 
     virtual int compute_new_e_factor(int old_e_factor, int response_quality) const;
 
 };
+
+}
 
 #endif

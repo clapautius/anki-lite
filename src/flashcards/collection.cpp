@@ -1,10 +1,10 @@
 #include <stdexcept>
 #include <map>
 #include <sstream>
-#include <QDebug>
+//#include <QDebug>
 
 #include "collection.hpp"
-#include "anki-utils.hpp"
+//#include "anki-utils.hpp"
 
 using std::map;
 using std::string;

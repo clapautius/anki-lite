@@ -2,7 +2,7 @@
 #define ANKI_LITE_COLLECTION_HPP_
 
 #include <vector>
-#include <QString>
+//#include <QString>
 #include "anki-types.hpp"
 #include "deck.hpp"
 

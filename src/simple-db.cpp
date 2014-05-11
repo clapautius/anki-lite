@@ -87,7 +87,7 @@ void SimpleDb::get_cards_for_deck(Deck &deck)
         if (deck.id() == deck_id) {
             string front_text = cards_table[card_id]["front_text"].str_value;
             string back_text = cards_table[card_id]["back_text"].str_value;
-            shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
+            boost::shared_ptr<ICard> card(new Card(card_id, front_text, back_text));
             card->set_deck_id(deck_id);
             deck.add_card(card);
         }

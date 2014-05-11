@@ -1,5 +1,7 @@
 #include "memo-alg-sm2.hpp"
 
+namespace anki_lite
+{
 
 /**
  * Compute new interval according to the SM2 formula:
@@ -10,7 +12,7 @@
  * @param[in] e_factor : easiness factor - expressed as an int (1.32 = 132)
  */
 Interval MemoAlgSm2::compute_new_interval(Interval old_intv, int repetition,
-                                          int e_factor)
+                                          int e_factor) const
 {
     Interval intv = 0;
     if (repetition == 1) {
@@ -33,7 +35,7 @@ Interval MemoAlgSm2::compute_new_interval(Interval old_intv, int repetition,
  * q - quality of the response in the 0-5 grade scale.
  * If EF is less than 1.3 then let EF be 1.3.
  */
-int MemoAlgSm2::compute_new_e_factor(int old_e_factor, int response_quality)
+int MemoAlgSm2::compute_new_e_factor(int old_e_factor, int response_quality) const
 {
     double e_factor;
     double old_e_factor_d = old_e_factor / 100.0;
@@ -56,4 +58,6 @@ void MemoAlgSm2::update_viewed_card(ICard &card, int response_quality) const
     } else {
         card.inc_repetition();
     }
+}
+
 }
