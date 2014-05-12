@@ -1,4 +1,5 @@
 add_subdirectory (cli)
+add_subdirectory (test)
 
 add_library (anki-lite
   simple-db.cpp
