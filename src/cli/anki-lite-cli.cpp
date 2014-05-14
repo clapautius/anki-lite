@@ -21,9 +21,8 @@ bool print_help(const string &s="");
 bool print_help(const string &)
 {
     cout << "Available commands:" << endl;
-    for (unsigned i = 0; i < g_cli_commands.size(); i++) {
-        cout << " - " << g_cli_commands[i].help_message() << endl;
-    }
+    for_each (g_cli_commands.begin(), g_cli_commands.end(),
+              [] (const CliCommand &c) { cout << " - " << c.help_message() << endl; });
     return true;
 }
 

@@ -36,6 +36,7 @@ public:
     unsigned int get_no_of_cards() const;
 
     boost::shared_ptr<ICard> get_card(unsigned index);
+
     boost::shared_ptr<const ICard> get_card(unsigned index) const;
 
     bool is_valid() const;

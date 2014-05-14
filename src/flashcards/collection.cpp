@@ -173,4 +173,23 @@ Id Collection::get_free_id() const
     return max_id + 1;
 }
 
+
+boost::shared_ptr<ICard> Collection::get_next_card(Id deck_id)
+{
+    int min_due = -1;
+    boost::shared_ptr<ICard> min_due_card;
+    for (unsigned i = 0; i < get_no_of_decks(); i++) {
+        Deck &deck = get_deck_by_idx(i);
+        for (unsigned j = 0; j < deck.get_no_of_cards(); j++) {
+            boost::shared_ptr<ICard> card = deck.get_card(j);
+            if (card->due() < min_due || min_due == -1) {
+                min_due = card->due();
+                min_due_card = card;
+            }
+        }
+    }
+    return min_due_card;
+}
+
+
 };

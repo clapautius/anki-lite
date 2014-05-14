@@ -55,6 +55,15 @@ public:
      */
     Id get_free_id() const;
 
+    /**
+     * @return The card with minimum due() value. If there are no cards, return a NULL
+     * shared_ptr.
+     *
+     * @param[in] deck_id : id of the deck to get the card from, or -1 to search all
+     * decks.
+     */
+    boost::shared_ptr<ICard> get_next_card(Id deck_id = -1);
+
 private:
 
     bool m_valid;
