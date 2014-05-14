@@ -44,7 +44,7 @@ Card class
 SimpleDb
 ________
 
-table[1] | id(int64) | field[16] | field_type[1] | value(int64)
+table[1] | field_type[1] | field[16] | id(int64) | value(int64)
 
 
 Dictionary

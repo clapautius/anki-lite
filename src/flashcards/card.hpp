@@ -37,6 +37,8 @@ public:
 
     virtual void set_last_view_now() = 0;
 
+    virtual void set_last_view(Interval) = 0;
+
     virtual void set_interval(Interval intv) = 0;
 
     virtual Interval due() const = 0;
@@ -45,7 +47,7 @@ public:
 
     virtual void inc_repetition() = 0;
 
-    virtual void reset_repetition() = 0;
+    virtual void reset_repetition(int new_value= 1) = 0;
 
     virtual Interval interval() const = 0;
 };
@@ -114,6 +116,11 @@ public:
         m_last_view = time(NULL);
     }
 
+    virtual void set_last_view(Interval i)
+    {
+        m_last_view = i;
+    }
+
     virtual Interval interval() const
     {
         return m_interval;
@@ -139,9 +146,9 @@ public:
         ++m_repetition;
     }
 
-    virtual void reset_repetition()
+    virtual void reset_repetition(int new_value = 1)
     {
-        m_repetition = 1;
+        m_repetition = new_value;
     }
 
 private:

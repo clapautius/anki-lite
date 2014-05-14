@@ -96,7 +96,7 @@ private:
         std::string str_value;
     };
 
-    static const unsigned int m_field_size = 16;
+    static const unsigned int m_field_size = 14;
 
     // table id + id + field name + field type + field value
     static const unsigned int m_record_size = 1 + 8 + m_field_size + 1 + 8;
@@ -119,12 +119,13 @@ private:
                                 char buffer[m_record_size]);
 
     /**
-     * Write the record to the records stream.
+     * Write to db file a fixed width record.
      */
-    void write_record(Table table, Id id, const std::string &field, int64_t value);
+    void write_record(Table table, Id id, const std::string &field, int64_t value,
+                      FieldType field_type = k_field_int);
 
     /**
-     * Write the record and the string to the records and strings streams.
+     * Write the record and the string to the records and strings files.
      */
     void write_record(Table table, Id id, const std::string &field,
                       const std::string &str);

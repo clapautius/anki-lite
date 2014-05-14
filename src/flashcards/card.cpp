@@ -18,10 +18,12 @@ Card::Card(Id id, const string &front_text, const string &back_text)
 string Card::to_string() const
 {
     ostringstream ostr;
-    ostr << "Card (id" << id() << ")" << endl;
+    ostr << "Card (id=" << id() << ")" << endl;
     ostr << "  deck id: " << deck_id() <<endl;
     ostr << "  front text: " << front_text() << endl;
     ostr << "  back text: " << back_text() << endl;
+    ostr << "  e_factor: " << e_factor() << ", last_view: " << last_view()
+         << ", interval: " << interval() << ", repetition: " << repetition();
     return ostr.str();
 }
 

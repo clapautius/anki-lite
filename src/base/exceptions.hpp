@@ -17,6 +17,16 @@ public:
 };
 
 
+class InvalidData : public std::runtime_error
+{
+public:
+    InvalidData(const std::string &text = "Invalid data error")
+      : std::runtime_error(text)
+    {
+    }
+};
+
+
 /**
  * Unknown internal error (probably a bug).
  */

@@ -6,6 +6,8 @@
 #include <map>
 #include <string>
 
+#define ANKI_DEBUG
+
 namespace anki_lite
 {
 

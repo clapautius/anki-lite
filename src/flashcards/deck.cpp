@@ -44,7 +44,9 @@ Deck::Deck(const string &id, const string &details)
 Deck::Deck(Id id, std::map<std::string, std::string> &details)
   : m_id(id)
 {
-    std::cout << __FUNCTION__ << "(id=" << id <<")";
+#ifdef ANKI_DEBUG
+    std::cout << __FUNCTION__ << ": New deck (id=" << id << ")" << endl;
+#endif
     m_name = details["name"];
 }
 
@@ -54,7 +56,9 @@ Deck::Deck(const string &id, map<string, string> &details)
 {
     // :fixme:
     //qDebug() << __FUNCTION__ << "(id=" << id <<")";
-    std::cout << __FUNCTION__ << "(id=" << id <<")";
+#ifdef ANKI_DEBUG
+    std::cout << __FUNCTION__ << ": New deck (id=" << id <<")" << endl;
+#endif
     char *ptr = NULL;
     m_id = strtoll(id.c_str(), &ptr, 10);
     if (m_id == 0 && ptr == id.c_str()) {
@@ -90,7 +94,6 @@ string Deck::to_string() const
         boost::shared_ptr<const ICard> card = get_card(i);
         ret << card->to_string() <<endl;
     }
-    ret << endl;
     return ret.str();
 }
 

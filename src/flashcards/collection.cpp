@@ -125,6 +125,18 @@ Deck& Collection::get_deck_by_idx(unsigned index)
     return m_decks[index];
 }
 
+
+Deck& Collection::get_deck_by_id(Id id)
+{
+    for (unsigned i = 0; i < m_decks.size(); i++) {
+        if (m_decks[i].id() == id) {
+            return m_decks[i];
+        }
+    }
+    throw std::runtime_error("Cannot find deck by id");
+}
+
+
 unsigned Collection::get_no_of_decks() const
 {
     return m_decks.size();
@@ -137,10 +149,28 @@ std::string Collection::to_string() const
     ostr << "Collection:" << endl;
     for (unsigned i = 0; i < get_no_of_decks(); i++) {
         const Deck &deck = get_deck_by_idx(i);
-        ostr << deck.to_string();
+        ostr << deck.to_string() << endl;
     }
-    ostr << endl;
     return ostr.str();
+}
+
+
+Id Collection::get_free_id() const
+{
+    Id max_id = 0;
+    for (unsigned i = 0; i < get_no_of_decks(); i++) {
+        const Deck &deck = get_deck_by_idx(i);
+        if (deck.id() > max_id) {
+            max_id = deck.id();
+        }
+        for (unsigned j = 0; j < deck.get_no_of_cards(); j++) {
+            boost::shared_ptr<const ICard> card = deck.get_card(j);
+            if (card->id() > max_id) {
+                max_id = card->id();
+            }
+        }
+    }
+    return max_id + 1;
 }
 
 };

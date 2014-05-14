@@ -7,6 +7,7 @@
 #include "collection.hpp"
 #include "simple-db.hpp"
 #include "exceptions.hpp"
+#include "anki-utils.hpp"
 
 using namespace std;
 using namespace anki_lite;
@@ -74,9 +75,37 @@ bool add_deck_to_collection(const string &cmd)
     } else {
         TextMapT details;
         details["name"] = tokens[1];
-        Deck deck(0, details);
+        Deck deck(g_collection.get_free_id(), details);
         g_collection.add_deck(deck);
     }
+    return true;
+}
+
+
+bool add_card_to_collection(const string &cmd)
+{
+    vector<string> tokens;
+    tokenize_cmd(cmd, tokens);
+    if (tokens.size() < 4) {
+        cout << "Invalid command" << endl;
+    } else {
+        Id deck_id = anki_lite::string_to_id(tokens[1]);
+        Deck &deck = g_collection.get_deck_by_id(deck_id);
+        boost::shared_ptr<Card> card(new Card(g_collection.get_free_id(),
+                                              tokens[2], tokens[3]));
+        card->set_deck_id(deck_id);
+        deck.add_card(card);
+    }
+    return true;
+}
+
+
+/**
+ * Print entire collection to stdout.
+ */
+bool print_collection(const string&)
+{
+    cout << g_collection.to_string() << endl;
     return true;
 }
 
@@ -91,7 +120,6 @@ bool process_cmd(const string &full_cmd, const vector<CliCommand> &commands)
         if ((*it).matches(cmd)) {
             try {
                 rc = (*it)(full_cmd);
-                cout << "> ";
             }
             catch (std::runtime_error &e) {
                 cout << "Error executing command: " << e.what() << endl;
@@ -126,6 +154,11 @@ void init_cmds(vector<CliCommand> &commands)
                                   "s"));
     commands.push_back(CliCommand("add-deck", add_deck_to_collection,
                                   "add-deck <deck-name> : add a deck to collection"));
+    commands.push_back(CliCommand("add-card", add_card_to_collection,
+                                  "add-card <deck-id> <front-text> <back-text> "
+                                  ": add a deck to collection"));
+    commands.push_back(CliCommand("print", print_collection,
+                                  "print | p : print collection to stdout", "p"));
 }
 
 
@@ -134,6 +167,7 @@ int main(int, char **)
     string cmd;
     init_cmds(g_cli_commands);
     while(1) {
+        cout << "> ";
         getline(cin, cmd);
         if (!process_cmd(cmd, g_cli_commands)) {
             break;

@@ -2,7 +2,6 @@
 #define ANKI_LITE_COLLECTION_HPP_
 
 #include <vector>
-//#include <QString>
 #include "anki-types.hpp"
 #include "deck.hpp"
 
@@ -38,9 +37,23 @@ public:
 
     Deck& get_deck_by_idx(unsigned index);
 
+    /**
+     * Return the deck having the id 'id'.
+     *
+     * @throw std::runtime_error() if no such deck exists.
+     */
+    Deck& get_deck_by_id(Id id);
+
     unsigned get_no_of_decks() const;
 
     std::string to_string() const;
+
+    /**
+     * Return an id for a deck or a card that is not used.
+     *
+     * @todo Make separate functions for deck ids and card ids. :fixme:
+     */
+    Id get_free_id() const;
 
 private:
 
