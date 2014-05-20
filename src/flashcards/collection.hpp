@@ -77,6 +77,9 @@ private:
     */
 
     std::vector<Deck> m_decks;
+
+    friend void collection_automatic_tests();
+
 };
 
 } // namespace anki_lite

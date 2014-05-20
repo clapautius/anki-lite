@@ -178,7 +178,8 @@ boost::shared_ptr<ICard> Collection::get_next_card(Id deck_id)
 {
     int min_due = -1;
     boost::shared_ptr<ICard> min_due_card;
-    for (unsigned i = 0; i < get_no_of_decks(); i++) {
+    for (unsigned i = (deck_id == -1 ? 0 : deck_id);
+         i < (deck_id == -1 ? get_no_of_decks() : deck_id + 1); i++) {
         Deck &deck = get_deck_by_idx(i);
         for (unsigned j = 0; j < deck.get_no_of_cards(); j++) {
             boost::shared_ptr<ICard> card = deck.get_card(j);
