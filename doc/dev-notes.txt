@@ -59,3 +59,9 @@ Install the application on the device:
 deploy the app.)
 
 QtSdk 1.1.1 : ftp://ftp.informatik.hu-berlin.de/pub/Linux/Qt/QT/qtsdk/
+
+
+Supermemo alg - v2
+__________________
+
+http://www.supermemo.com/english/ol/sm2.htm

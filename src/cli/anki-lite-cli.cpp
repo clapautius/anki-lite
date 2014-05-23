@@ -8,6 +8,7 @@
 #include "simple-db.hpp"
 #include "exceptions.hpp"
 #include "anki-utils.hpp"
+#include "memo-alg-sm2.hpp"
 
 using namespace std;
 using namespace anki_lite;
@@ -108,6 +109,40 @@ bool print_collection(const string&)
     return true;
 }
 
+/**
+ * View the next card (and update its parameters).
+ */
+bool view_next_card(const string &cmd)
+{
+    vector<string> tokens;
+    int response_quality = 3;
+    tokenize_cmd(cmd, tokens);
+    /*
+    if (tokens.size() > 1) {
+        response_quality = string_to_id(tokens[1]);
+    }
+    */
+    // :todo: atm the card is chosen from all decks
+    boost::shared_ptr<ICard> card = g_collection.get_next_card();
+    cout << card->to_string() << endl;
+    std::auto_ptr<anki_lite::IMemoAlg> alg(new anki_lite::MemoAlgSm2);
+    do
+    {
+        cout << "Response quality: ";
+        if (!(cin >> response_quality) || (response_quality < 0 || response_quality > 5)){
+            string ign;
+            cout << "Invalid response (must be a number between 0 and 5)" << endl;
+            cin.clear();
+            getline(cin, ign);
+        } else {
+            break;
+        }
+    } while (1);
+    alg->update_viewed_card(*card, response_quality);
+    cout << card->to_string() << endl;
+    return true;
+}
+
 
 bool process_cmd(const string &full_cmd, const vector<CliCommand> &commands)
 {
@@ -158,6 +193,10 @@ void init_cmds(vector<CliCommand> &commands)
                                   ": add a deck to collection"));
     commands.push_back(CliCommand("print", print_collection,
                                   "print | p : print collection to stdout", "p"));
+    commands.push_back(CliCommand("view-next-card", view_next_card,
+                                  "view-next-card | view [ <response-quality: 0-5> ] : "
+                                  "view the next due card and update its parameters",
+                                  "view"));
 }
 
 

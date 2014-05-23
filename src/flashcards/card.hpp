@@ -47,7 +47,7 @@ public:
 
     virtual void inc_repetition() = 0;
 
-    virtual void reset_repetition(int new_value= 1) = 0;
+    virtual void reset_repetition(int new_value = 0) = 0;
 
     virtual Interval interval() const = 0;
 };
@@ -133,7 +133,7 @@ public:
 
     Interval due() const
     {
-        return m_last_view + m_interval;
+        return m_last_view + m_interval * (24 * 60 * 60);
     }
 
     virtual int repetition() const
@@ -146,7 +146,7 @@ public:
         ++m_repetition;
     }
 
-    virtual void reset_repetition(int new_value = 1)
+    virtual void reset_repetition(int new_value = 0)
     {
         m_repetition = new_value;
     }

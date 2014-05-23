@@ -15,6 +15,8 @@ public:
 
     virtual void update_viewed_card(ICard &card, int response_quality) const = 0;
 
+    virtual ~IMemoAlg() {};
+
 protected:
 
     virtual Interval compute_new_interval(Interval old_intv, int repetition,

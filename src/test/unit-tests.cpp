@@ -4,13 +4,20 @@
 #include "cli-utils.hpp"
 #include "simple-db.hpp"
 #include "collection.hpp"
+#include "memo-alg-sm2.hpp"
 
 using namespace std;
 using namespace anki_lite;
 
 bool g_tst_all_tests_ok = true;
 
-#define TST_CHECK_EQUAL(X, Y) { if (X == Y) ; else { std::cout << "Test failed: " << X << "==" << Y << endl << std::endl; g_tst_all_tests_ok = false; } }
+#define TST_CHECK_EQUAL(X, Y) { if (X == Y) ; \
+        else { cout << "Test failed: " << X << " == " << Y << " (line " \
+                    << __LINE__ << ")" << endl << endl; g_tst_all_tests_ok = false; } }
+
+#define TST_CHECK(X) { if (X) ; \
+        else { cout << "Test failed: " << #X << " (line " \
+                    << __LINE__ << ")" << endl << endl; g_tst_all_tests_ok = false; } }
 
 void cli_tests()
 {
@@ -73,11 +80,34 @@ void collection_automatic_tests()
 }
 
 
+void alg_sm2_automatic_tests()
+{
+    MemoAlgSm2 alg;
+    Interval intv;
+    int e_factor;
+
+    // test interval calculation
+    intv = alg.compute_new_interval(0, 1, 250);
+    TST_CHECK_EQUAL(intv, 1);
+    intv = alg.compute_new_interval(1, 2, 250);
+    TST_CHECK_EQUAL(intv, 6);
+    intv = alg.compute_new_interval(6, 3, 300);
+    TST_CHECK_EQUAL(intv, 18);
+
+    // test e-factor calculation
+    e_factor = alg.compute_new_e_factor(250, 5);
+    TST_CHECK_EQUAL(e_factor, 260);
+    e_factor = alg.compute_new_e_factor(250, 0);
+    TST_CHECK((abs(e_factor - 170) < 3));
+}
+
+
 int main()
 {
     cli_tests();
     simple_db_automatic_tests();
     collection_automatic_tests();
+    alg_sm2_automatic_tests();
 
     if (g_tst_all_tests_ok) {
         cout << "All tests passed." << endl;

@@ -3,10 +3,12 @@
 
 #include "i-memo-alg.hpp"
 
+void alg_sm2_automatic_tests();
+
 namespace anki_lite
 {
 
-class MemoAlgSm2 : IMemoAlg
+class MemoAlgSm2 : public IMemoAlg
 {
 public:
     virtual void update_viewed_card(ICard &card, int response_quality) const;
@@ -18,6 +20,7 @@ protected:
 
     virtual int compute_new_e_factor(int old_e_factor, int response_quality) const;
 
+    friend void ::alg_sm2_automatic_tests();
 };
 
 }
